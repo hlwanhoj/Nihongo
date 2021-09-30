@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../constants.dart';
 import '../models/word.dart';
 
 /// The front face of a word card
@@ -21,7 +22,8 @@ class WordCardFront extends StatelessWidget {
             child: Text(
           _kanji,
           textAlign: TextAlign.center,
-          style: const TextStyle(fontFamily: 'Noto Sans JP', fontSize: 60),
+          style: const TextStyle(
+              fontFamily: Constants.defaultFontFamily, fontSize: 60),
         )),
       ),
     );
@@ -101,8 +103,8 @@ class WordCardBack extends StatelessWidget {
               Text(
                 _word.meaning,
                 textAlign: TextAlign.center,
-                style:
-                    const TextStyle(fontFamily: 'Noto Sans JP', fontSize: 24),
+                style: const TextStyle(
+                    fontFamily: Constants.defaultFontFamily, fontSize: 24),
               ),
             ],
           )),
@@ -138,5 +140,34 @@ class AccentPainter extends CustomPainter {
   @override
   bool shouldRepaint(AccentPainter oldDelegate) {
     return accent != oldDelegate.accent || color != oldDelegate.color;
+  }
+}
+
+//
+
+class WordCard extends StatefulWidget {
+  final Word word;
+
+  const WordCard({required this.word, Key? key}) : super(key: key);
+
+  @override
+  _WordCardState createState() => _WordCardState();
+}
+
+class _WordCardState extends State<WordCard> {
+  bool _isShowingFront = true;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      child: (_isShowingFront
+          ? WordCardFront(kanji: widget.word.kanji)
+          : WordCardBack(word: widget.word)),
+      onTap: () {
+        setState(() {
+          _isShowingFront = !_isShowingFront;
+        });
+      },
+    );
   }
 }

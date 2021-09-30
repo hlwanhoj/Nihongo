@@ -12,6 +12,13 @@ class CardListPage extends StatefulWidget {
 }
 
 class _CardListPageState extends State<CardListPage> {
+  final Word word = const Word(
+      kanji: "すべての人間",
+      kana: "すべての人間",
+      accentAtIndex: {1: CharacterAccent.plain, 2: CharacterAccent.fall},
+      meaning:
+          "The meaning The meaning The meaning The meaning The meaning The meaning ");
+
   @override
   void initState() {
     super.initState();
@@ -20,23 +27,15 @@ class _CardListPageState extends State<CardListPage> {
   @override
   Widget build(BuildContext context) {
     return ColoredBox(
-      color: Colors.white,
-      child: Center(
-          child: SizedBox(
-        width: MediaQuery.of(context).size.width - 40,
-        child: const AspectRatio(
-          aspectRatio: 3 / 4,
-          child: WordCardBack(
-              word: Word(
-                  kana: "すべての人間",
-                  accentAtIndex: {
-                    1: CharacterAccent.plain,
-                    2: CharacterAccent.fall
-                  },
-                  meaning:
-                      "The meaning The meaning The meaning The meaning The meaning The meaning ")),
-        ),
-      )),
-    );
+        color: Colors.white,
+        child: Center(
+            child: SizedBox(
+          width: MediaQuery.of(context).size.width - 40,
+          child: AspectRatio(
+              aspectRatio: 3 / 4,
+              child: WordCard(
+                word: word,
+              )),
+        )));
   }
 }
