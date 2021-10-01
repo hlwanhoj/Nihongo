@@ -3,10 +3,10 @@ import '../../constants.dart';
 import '../models/word.dart';
 
 /// The front face of a word card
-class WordCardFront extends StatelessWidget {
+class WordCardFrontView extends StatelessWidget {
   final String _kanji;
 
-  const WordCardFront({required String kanji, Key? key})
+  const WordCardFrontView({required String kanji, Key? key})
       : _kanji = kanji,
         super(key: key);
 
@@ -31,10 +31,10 @@ class WordCardFront extends StatelessWidget {
 }
 
 /// The back face of a word card
-class WordCardBack extends StatelessWidget {
+class WordCardBackView extends StatelessWidget {
   final Word _word;
 
-  const WordCardBack({required Word word, Key? key})
+  const WordCardBackView({required Word word, Key? key})
       : _word = word,
         super(key: key);
 
@@ -145,24 +145,24 @@ class AccentPainter extends CustomPainter {
 
 //
 
-class WordCard extends StatefulWidget {
+class WordCardView extends StatefulWidget {
   final Word word;
 
-  const WordCard({required this.word, Key? key}) : super(key: key);
+  const WordCardView({required this.word, Key? key}) : super(key: key);
 
   @override
-  _WordCardState createState() => _WordCardState();
+  _WordCardViewState createState() => _WordCardViewState();
 }
 
-class _WordCardState extends State<WordCard> {
+class _WordCardViewState extends State<WordCardView> {
   bool _isShowingFront = true;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       child: (_isShowingFront
-          ? WordCardFront(kanji: widget.word.kanji)
-          : WordCardBack(word: widget.word)),
+          ? WordCardFrontView(kanji: widget.word.kanji)
+          : WordCardBackView(word: widget.word)),
       onTap: () {
         setState(() {
           _isShowingFront = !_isShowingFront;
