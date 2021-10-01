@@ -19,12 +19,15 @@ class WordCardFrontView extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Center(
-            child: Text(
-          _kanji,
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-              fontFamily: Constants.defaultFontFamily, fontSize: 60),
-        )),
+          child: Text(
+            _kanji,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontFamily: Constants.defaultFontFamily,
+              fontSize: 60,
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -62,13 +65,14 @@ class WordCardBackView extends StatelessWidget {
       if (accent != null) {
         textColor = _colorFromAccent(accent);
         textWidgets.add(Positioned(
-            left: 0,
-            top: 0,
-            right: 0,
-            height: 20,
-            child: CustomPaint(
-              painter: AccentPainter(accent: accent, color: textColor),
-            )));
+          left: 0,
+          top: 0,
+          right: 0,
+          height: 20,
+          child: CustomPaint(
+            painter: AccentPainter(accent: accent, color: textColor),
+          ),
+        ));
       }
 
       textWidgets.add(
@@ -76,25 +80,30 @@ class WordCardBackView extends StatelessWidget {
           character,
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontFamily: 'Noto Sans JP', fontSize: 24, color: textColor),
+            fontFamily: Constants.defaultFontFamily,
+            fontSize: 24,
+            color: textColor,
+          ),
         ),
       );
 
       kanaWidgets.add(SizedBox(
-          height: 40,
-          child: Stack(
-              alignment: AlignmentDirectional.bottomCenter,
-              children: textWidgets)));
+        height: 40,
+        child: Stack(
+          alignment: AlignmentDirectional.bottomCenter,
+          children: textWidgets,
+        ),
+      ));
     });
 
     return Card(
-        elevation: 12,
-        color: Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Center(
-              child: Column(
+      elevation: 12,
+      color: Colors.white,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Center(
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -107,8 +116,10 @@ class WordCardBackView extends StatelessWidget {
                     fontFamily: Constants.defaultFontFamily, fontSize: 24),
               ),
             ],
-          )),
-        ));
+          ),
+        ),
+      ),
+    );
   }
 }
 
