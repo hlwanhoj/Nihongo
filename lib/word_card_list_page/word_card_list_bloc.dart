@@ -1,8 +1,8 @@
-part of 'card_list_page.dart';
+part of 'word_card_list_page.dart';
 
-class CardListBloc extends Bloc<CardListEvent, CardListState> {
-  CardListBloc()
-      : super(const CardListState(words: [
+class WordCardListBloc extends Bloc<WordCardListEvent, WordCardListState> {
+  WordCardListBloc()
+      : super(const WordCardListState(words: [
           // Word(
           //     kanji: "すべての人間",
           //     kana: "すべての人間",
@@ -30,7 +30,7 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
           //     meaning:
           //         "The meaning The meaning The meaning The meaning The meaning The meaning "),
         ])) {
-    on<CardListUpdated>((event, emit) {
+    on<WordCardListUpdated>((event, emit) {
       int _cardIndex = state.cardIndex;
 
       // Make sure the card index is valid
@@ -40,7 +40,7 @@ class CardListBloc extends Bloc<CardListEvent, CardListState> {
 
       emit(state.copyWith(words: event.words, cardIndex: _cardIndex));
     });
-    on<CardListNextCardRequested>((event, emit) {
+    on<WordCardListNextCardRequested>((event, emit) {
       // int _cardIndex = state.cardIndex + 1;
 
       // // Make sure the card index is valid

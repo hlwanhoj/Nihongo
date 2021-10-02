@@ -1,10 +1,10 @@
-part of 'card_list_page.dart';
+part of 'word_card_list_page.dart';
 
-class CardListState extends Equatable {
+class WordCardListState extends Equatable {
   final List<Word> words;
   final int cardIndex;
 
-  const CardListState({this.words = const [], this.cardIndex = 0});
+  const WordCardListState({this.words = const [], this.cardIndex = 0});
 
   Word? get currentWord {
     if (words.length > cardIndex) {
@@ -15,8 +15,8 @@ class CardListState extends Equatable {
 
   //
 
-  CardListState copyWith({List<Word>? words, int? cardIndex}) {
-    return CardListState(
+  WordCardListState copyWith({List<Word>? words, int? cardIndex}) {
+    return WordCardListState(
       words: words ?? this.words,
       cardIndex: cardIndex ?? this.cardIndex,
     );

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'card_list_page/card_list_page.dart';
+import 'word_card_list_page/word_card_list_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const CardListPage(),
+      home: const WordCardListPage(),
     );
   }
 }

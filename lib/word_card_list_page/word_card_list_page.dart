@@ -7,20 +7,20 @@ import 'package:nihongo/constants.dart';
 import 'word_card.dart';
 import '../models/word.dart';
 
-part 'card_list_state.dart';
-part 'card_list_event.dart';
-part 'card_list_bloc.dart';
+part 'word_card_list_state.dart';
+part 'word_card_list_event.dart';
+part 'word_card_list_bloc.dart';
 
-class CardListPage extends StatelessWidget {
-  const CardListPage({Key? key}) : super(key: key);
+class WordCardListPage extends StatelessWidget {
+  const WordCardListPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: BlocProvider(
-        create: (context) => CardListBloc(),
-        child: const CardListView(),
+        create: (context) => WordCardListBloc(),
+        child: const WordCardListView(),
       ),
     );
   }
@@ -28,17 +28,17 @@ class CardListPage extends StatelessWidget {
 
 //
 
-class CardListView extends StatefulWidget {
-  const CardListView({Key? key}) : super(key: key);
+class WordCardListView extends StatefulWidget {
+  const WordCardListView({Key? key}) : super(key: key);
 
   @override
-  _CardListViewState createState() => _CardListViewState();
+  _WordCardListViewState createState() => _WordCardListViewState();
 }
 
-class _CardListViewState extends State<CardListView> {
+class _WordCardListViewState extends State<WordCardListView> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CardListBloc, CardListState>(
+    return BlocBuilder<WordCardListBloc, WordCardListState>(
       builder: (context, state) {
         final List<Widget> stackChildren = [];
         final Word? currentWord = state.currentWord;
@@ -75,7 +75,9 @@ class _CardListViewState extends State<CardListView> {
                 ],
               ),
               onPressed: () {
-                context.read<CardListBloc>().add(CardListNextCardRequested());
+                context
+                    .read<WordCardListBloc>()
+                    .add(WordCardListNextCardRequested());
               },
             ),
           ));
