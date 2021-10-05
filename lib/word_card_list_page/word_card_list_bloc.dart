@@ -1,35 +1,11 @@
 part of 'word_card_list_page.dart';
 
 class WordCardListBloc extends Bloc<WordCardListEvent, WordCardListState> {
-  WordCardListBloc()
-      : super(const WordCardListState(words: [
-          // Word(
-          //     kanji: "すべての人間",
-          //     kana: "すべての人間",
-          //     accentAtIndex: {
-          //       1: CharacterAccent.plain,
-          //       2: CharacterAccent.fall
-          //     },
-          //     meaning:
-          //         "The meaning The meaning The meaning The meaning The meaning The meaning "),
-          // Word(
-          //     kanji: "国連総会",
-          //     kana: "国連総会",
-          //     accentAtIndex: {
-          //       0: CharacterAccent.plain,
-          //       1: CharacterAccent.plain,
-          //       2: CharacterAccent.plain,
-          //       3: CharacterAccent.fall
-          //     },
-          //     meaning:
-          //         "The meaning The meaning The meaning The meaning The meaning The meaning "),
-          // Word(
-          //     kanji: "加盟国",
-          //     kana: "加盟国",
-          //     accentAtIndex: {1: CharacterAccent.fall},
-          //     meaning:
-          //         "The meaning The meaning The meaning The meaning The meaning The meaning "),
-        ])) {
+  final WordCardDataRepository repository;
+  late final StreamSubscription<List<Word>> _wordsSubscription;
+
+  WordCardListBloc(this.repository)
+      : super(const WordCardListState(words: [])) {
     on<WordCardListUpdated>((event, emit) {
       int _cardIndex = state.cardIndex;
 
@@ -50,5 +26,15 @@ class WordCardListBloc extends Bloc<WordCardListEvent, WordCardListState> {
       int _cardIndex = Random().nextInt(state.words.length);
       emit(state.copyWith(cardIndex: _cardIndex));
     });
+
+    _wordsSubscription = repository.words.listen((words) {
+      add(WordCardListUpdated(words: words));
+    });
+  }
+
+  @override
+  Future<void> close() {
+    _wordsSubscription.cancel();
+    return super.close();
   }
 }

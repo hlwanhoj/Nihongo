@@ -1,11 +1,13 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nihongo/constants.dart';
-import 'word_card.dart';
+import '../constants.dart';
 import '../models/word.dart';
+import 'word_card.dart';
+import 'word_card_data_repository.dart';
 
 part 'word_card_list_state.dart';
 part 'word_card_list_event.dart';
@@ -19,7 +21,7 @@ class WordCardListPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: BlocProvider(
-        create: (context) => WordCardListBloc(),
+        create: (context) => WordCardListBloc(context.read<WordCardDataRepository>()),
         child: const WordCardListView(),
       ),
     );
