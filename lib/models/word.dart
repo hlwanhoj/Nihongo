@@ -1,7 +1,9 @@
-import 'package:uuid/uuid.dart';
+import 'package:json_annotation/json_annotation.dart';
+part 'word.g.dart';
 
 enum CharacterAccent { plain, fall }
 
+@JsonSerializable()
 class Word {
   final String id;
   final String kanji;
@@ -11,11 +13,15 @@ class Word {
   final List<String> tags;
 
   Word({
-    String? identifier,
+    required this.id,
     required this.kanji,
     required this.kana,
     required this.accentAtIndex,
     required this.meaning,
     this.tags = const [],
-  }) : id = identifier ?? const Uuid().v4();
+  });
+
+  factory Word.fromJson(Map<String, dynamic> json) => _$WordFromJson(json);
+
+  Map<String, dynamic> toJson() => _$WordToJson(this);
 }

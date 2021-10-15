@@ -19,57 +19,26 @@ class FileStore implements WordCardDataProviderType {
   @override
   Future<List<Word>> getWords() async {
     final File file = await _getWordsFile();
-    final wordsJSON = await file.readAsString();
-
-    var words = Utility.cast<List<Map<String, dynamic>>>(jsonDecode(wordsJSON));
-    if (words != null) {
-      var converted =
-          words.map((e) => _JSON.createWordfromJson(e)).whereNotNull();
-      return converted.toList();
+    final wordsJSONString = await file.readAsString();
+    final json = jsonDecode(wordsJSONString);
+    final wordMaps = Utility.cast<List<dynamic>>(jsonDecode(wordsJSONString));
+    if (wordMaps != null) {
+      final words = wordMaps.map((e) {
+        final word = Utility.cast<Map<String, dynamic>>(e);
+        if (word != null) {
+          return Word.fromJson(word);
+        }
+        return null;
+      }).whereNotNull();
+      return words.toList();
     } else {
       return [];
     }
   }
 
-  // Future<Map<String, Word>> _getWords() async {
-  //   final File file = await _getWordsFile();
-  //   final wordsJSON = await file.readAsString();
-
-  //   var words = Utility.cast<List<Map<String, dynamic>>>(jsonDecode(wordsJSON));
-  //   if (words != null) {
-  //     var converted =
-  //         words.map((e) => _JSON.createWordfromJson(e)).whereNotNull();
-  //     var mapped = {for (var v in converted) v.id: v};
-  //     return mapped;
-  //   } else {
-  //     return {};
-  //   }
-  // }
-}
-
-extension _JSON on Word {
-  static Word? createWordfromJson(Map<String, dynamic> json) {
-    final String? id = Utility.cast<String>(json['id']);
-    if (id != null) {
-      final _accentAtIndex =
-          Utility.cast<Map<int, String>>(json['accentAtIndex']) ?? {};
-
-      return Word(
-        identifier: id,
-        kanji: Utility.cast<String>(json['kanji']) ?? '',
-        kana: Utility.cast<String>(json['kana']) ?? '',
-        accentAtIndex:
-            _accentAtIndex.map<int, CharacterAccent>((key, accentStr) {
-          CharacterAccent accent = CharacterAccent.plain;
-          if (accentStr == 'fall') {
-            accent = CharacterAccent.fall;
-          }
-          return MapEntry<int, CharacterAccent>(key, accent);
-        }),
-        meaning: Utility.cast<String>(json['meaning']) ?? '',
-      );
-    }
-
-    return null;
+  @override
+  Future<void> setWords(List<Word> words) async {
+    final File file = await _getWordsFile();
+    await file.writeAsString(jsonEncode(words));
   }
 }
