@@ -21,7 +21,7 @@ class FileStore implements WordCardDataProviderType {
     final File file = await _getWordsFile();
     final wordsJSONString = await file.readAsString();
     final json = jsonDecode(wordsJSONString);
-    final wordMaps = Utility.cast<List<dynamic>>(jsonDecode(wordsJSONString));
+    final wordMaps = Utility.cast<List<dynamic>>(json);
     if (wordMaps != null) {
       final words = wordMaps.map((e) {
         final word = Utility.cast<Map<String, dynamic>>(e);

@@ -14,15 +14,23 @@ part 'word_card_list_event.dart';
 part 'word_card_list_bloc.dart';
 
 class WordCardListPage extends StatelessWidget {
-  const WordCardListPage({Key? key}) : super(key: key);
+  final void Function()? onAddCard;
+
+  const WordCardListPage({
+    this.onAddCard,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: BlocProvider(
-        create: (context) => WordCardListBloc(context.read<WordCardDataRepository>()),
-        child: const WordCardListView(),
+        create: (context) =>
+            WordCardListBloc(context.read<WordCardDataRepository>()),
+        child: WordCardListView(
+          onAddCard: onAddCard,
+        ),
       ),
     );
   }
@@ -31,7 +39,12 @@ class WordCardListPage extends StatelessWidget {
 //
 
 class WordCardListView extends StatefulWidget {
-  const WordCardListView({Key? key}) : super(key: key);
+  final void Function()? onAddCard;
+
+  const WordCardListView({
+    this.onAddCard,
+    Key? key,
+  }) : super(key: key);
 
   @override
   _WordCardListViewState createState() => _WordCardListViewState();
@@ -83,18 +96,8 @@ class _WordCardListViewState extends State<WordCardListView> {
               },
             ),
           ));
-        }
-
-        if (stackChildren.isNotEmpty) {
-          return SizedBox.expand(
-            child: Stack(
-              alignment: AlignmentDirectional.center,
-              fit: StackFit.loose,
-              children: stackChildren,
-            ),
-          );
         } else {
-          return const Center(
+          stackChildren.add(const Center(
             child: Text(
               'No words found.',
               textAlign: TextAlign.center,
@@ -103,8 +106,46 @@ class _WordCardListViewState extends State<WordCardListView> {
                 fontFamily: Constants.defaultFontFamily,
               ),
             ),
-          );
+          ));
         }
+
+        // Add new card button
+        stackChildren.add(Positioned(
+          bottom: 12,
+          right: 12,
+          child: IconButton(
+            icon: const Icon(Icons.add),
+            iconSize: 48,
+            padding: const EdgeInsets.all(0),
+            splashRadius: 30,
+            onPressed: widget.onAddCard,
+          ),
+        ));
+
+        // Edit current card button
+        stackChildren.add(Positioned(
+          bottom: 12,
+          left: 12,
+          child: IconButton(
+            icon: const Icon(Icons.edit),
+            iconSize: 30,
+            padding: const EdgeInsets.all(9),
+            splashRadius: 30,
+            onPressed: () {
+              // context
+              //     .read<WordCardListBloc>()
+              //     .add(WordCardListNextCardRequested());
+            },
+          ),
+        ));
+
+        return SizedBox.expand(
+          child: Stack(
+            alignment: AlignmentDirectional.center,
+            fit: StackFit.loose,
+            children: stackChildren,
+          ),
+        );
       },
     );
   }
