@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../constants.dart';
-import '../models/word.dart';
+import '../../models/word.dart';
 
 /// The front face of a word card
 class WordCardFrontView extends StatelessWidget {

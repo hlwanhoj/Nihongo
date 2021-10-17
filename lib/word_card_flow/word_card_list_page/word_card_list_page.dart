@@ -4,10 +4,10 @@ import 'dart:math';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../constants.dart';
-import '../models/word.dart';
+import '../../constants.dart';
+import '../../models/word.dart';
 import 'word_card.dart';
-import 'word_card_data_repository.dart';
+import '../word_card_data_repository.dart';
 
 part 'word_card_list_state.dart';
 part 'word_card_list_event.dart';

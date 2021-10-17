@@ -1,11 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:nihongo/word_card_edit_page/word_card_edit_page.dart';
 import 'package:provider/provider.dart';
 import 'word_card_route_path.dart';
 import '../stores/file_store.dart';
-import '../word_card_list_page/word_card_data_repository.dart';
-import '../word_card_list_page/word_card_list_page.dart';
+import 'word_card_data_repository.dart';
+import 'word_card_list_page/word_card_list_page.dart';
+import 'word_card_edit_page/word_card_edit_page.dart';
 
 class WordCardFlow extends RouterDelegate<WordCardRoutePath>
     with PopNavigatorRouterDelegateMixin<WordCardRoutePath>, ChangeNotifier {
@@ -43,15 +43,16 @@ class WordCardFlow extends RouterDelegate<WordCardRoutePath>
 
     final WordCardRoutePath path = _currentPath;
     if (path is WordCardEditRoutePath) {
-      pages.add(const MaterialPage(
+      pages.add(MaterialPage(
         key: ValueKey('WordCardEdit'),
         child: WordCardEditPage(),
       ));
     }
     if (path is WordCardAddRoutePath) {
-      pages.add(const MaterialPage(
-        key: ValueKey('WordCardAdd'),
+      pages.add(MaterialPage(
+        key: const ValueKey('WordCardAdd'),
         child: WordCardEditPage(),
+        fullscreenDialog: true,
       ));
     }
 

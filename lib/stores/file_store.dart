@@ -4,7 +4,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:collection/collection.dart';
 import '../utility.dart';
 import '../models/word.dart';
-import '../word_card_list_page/word_card_data_repository.dart';
+import '../word_card_flow/word_card_data_repository.dart';
 
 class FileStore implements WordCardDataProviderType {
   static final FileStore shared = FileStore();

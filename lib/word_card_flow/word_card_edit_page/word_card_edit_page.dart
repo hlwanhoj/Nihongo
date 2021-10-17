@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:nihongo/models/word.dart';
 // import 'package:flutter_bloc/flutter_bloc.dart';
 
 class WordCardEditPage extends StatelessWidget {
-  const WordCardEditPage({Key? key}) : super(key: key);
+  final Word? word;
+
+  WordCardEditPage({
+    this.word,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
