@@ -9,7 +9,8 @@ import 'word_card_edit_page/word_card_edit_page.dart';
 
 class WordCardFlow extends RouterDelegate<WordCardRoutePath>
     with PopNavigatorRouterDelegateMixin<WordCardRoutePath>, ChangeNotifier {
-  WordCardRoutePath _currentPath = WordCardListRoutePath();
+  WordCardRoutePath _currentPath = WordCardAddRoutePath();
+  // WordCardRoutePath _currentPath = WordCardListRoutePath();
 
   @override
   GlobalKey<NavigatorState>? navigatorKey = GlobalKey<NavigatorState>();
@@ -26,17 +27,11 @@ class WordCardFlow extends RouterDelegate<WordCardRoutePath>
     final List<Page<dynamic>> pages = [
       MaterialPage(
         key: const ValueKey('WordCardList'),
-        child: MultiProvider(
-          providers: [
-            Provider(
-                create: (_) => WordCardDataRepository(local: FileStore.shared))
-          ],
-          child: WordCardListPage(
-            onAddCard: () {
-              _currentPath = WordCardAddRoutePath();
-              notifyListeners();
-            },
-          ),
+        child: WordCardListPage(
+          onAddCard: () {
+            _currentPath = WordCardAddRoutePath();
+            notifyListeners();
+          },
         ),
       ),
     ];
@@ -45,13 +40,17 @@ class WordCardFlow extends RouterDelegate<WordCardRoutePath>
     if (path is WordCardEditRoutePath) {
       pages.add(MaterialPage(
         key: ValueKey('WordCardEdit'),
-        child: WordCardEditPage(),
+        child: WordCardEditPage(
+          onSubmit: (word) {},
+        ),
       ));
     }
     if (path is WordCardAddRoutePath) {
       pages.add(MaterialPage(
         key: const ValueKey('WordCardAdd'),
-        child: WordCardEditPage(),
+        child: WordCardEditPage(
+          onSubmit: (word) {},
+        ),
         fullscreenDialog: true,
       ));
     }

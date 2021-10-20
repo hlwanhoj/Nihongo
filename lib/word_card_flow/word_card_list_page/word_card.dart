@@ -25,6 +25,7 @@ class WordCardFrontView extends StatelessWidget {
             style: const TextStyle(
               fontFamily: Constants.defaultFontFamily,
               fontSize: 60,
+              color: Colors.black,
             ),
           ),
         ),
@@ -113,7 +114,10 @@ class WordCardBackView extends StatelessWidget {
                 _word.meaning,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
-                    fontFamily: Constants.defaultFontFamily, fontSize: 24),
+                  fontFamily: Constants.defaultFontFamily,
+                  fontSize: 24,
+                  color: Colors.black,
+                ),
               ),
             ],
           ),

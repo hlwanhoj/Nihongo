@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'stores/file_store.dart';
+import 'word_card_flow/word_card_data_repository.dart';
 import 'word_card_flow/word_card_flow.dart';
 import 'word_card_flow/word_card_route_parser.dart';
 
@@ -12,9 +15,39 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
+    // For fast testing
+    // return MaterialApp(
+    //   home: WordCardEditPage(
+    //     word: Word(
+    //         id: '123',
+    //         kanji: 'test kanji',
+    //         kana: 'test kana',
+    //         accentAtIndex: {},
+    //         meaning: 'test meaning',
+    //         tags: ['Tag 1', 'Tag 2', 'Tag 3']),
+    //     onSubmit: (word) {
+    //       print(word);
+    //     },
+    //   ),
+    // );
+    return MultiProvider(
+      providers: [
+        Provider(create: (_) => WordCardDataRepository(local: FileStore.shared))
+      ],
+      child: MaterialApp.router(
         routeInformationParser: WordCardRouteParser(),
-        routerDelegate: WordCardFlow());
+        routerDelegate: WordCardFlow(),
+        // theme: ThemeData.from(
+        //   colorScheme: const ColorScheme.dark().copyWith(
+        //     primary: const Color(0xff232f34),
+        //     secondary: const Color(0xfff9aa33),
+        //     surface: const Color(0xff232f34),
+        //     background: const Color(0xff232f34),
+        //   ),
+        //   textTheme: TextTheme()
+        // ),
+      ),
+    );
   }
 }
 

@@ -24,7 +24,6 @@ class WordCardListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: BlocProvider(
         create: (context) =>
             WordCardListBloc(context.read<WordCardDataRepository>()),
@@ -73,9 +72,9 @@ class _WordCardListViewState extends State<WordCardListView> {
           stackChildren.add(Positioned(
             bottom: 48,
             child: ElevatedButton(
-              style: ButtonStyle(
-                padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                    const EdgeInsets.only(left: 12)),
+              style: TextButton.styleFrom(
+                primary: Theme.of(context).colorScheme.onBackground,
+                padding: const EdgeInsets.only(left: 12),
               ),
               child: Row(
                 children: const [
