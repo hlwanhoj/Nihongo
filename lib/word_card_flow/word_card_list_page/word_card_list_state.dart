@@ -13,6 +13,7 @@ class WordCardListState extends Equatable {
     return null;
   }
 
+
   //
 
   WordCardListState copyWith({List<Word>? words, int? cardIndex}) {

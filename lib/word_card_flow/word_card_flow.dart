@@ -1,9 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'word_card_route_path.dart';
-import '../stores/file_store.dart';
+import 'package:provider/src/provider.dart';
 import 'word_card_data_repository.dart';
+import 'word_card_route_path.dart';
 import 'word_card_list_page/word_card_list_page.dart';
 import 'word_card_edit_page/word_card_edit_page.dart';
 
@@ -39,7 +38,7 @@ class WordCardFlow extends RouterDelegate<WordCardRoutePath>
     final WordCardRoutePath path = _currentPath;
     if (path is WordCardEditRoutePath) {
       pages.add(MaterialPage(
-        key: ValueKey('WordCardEdit'),
+        key: ValueKey('WordCardEdit ${path.cardId}'),
         child: WordCardEditPage(
           onSubmit: (word) {},
         ),
@@ -49,7 +48,11 @@ class WordCardFlow extends RouterDelegate<WordCardRoutePath>
       pages.add(MaterialPage(
         key: const ValueKey('WordCardAdd'),
         child: WordCardEditPage(
-          onSubmit: (word) {},
+          onSubmit: (word) {
+            context.read<WordCardDataRepository>().updateWord(word);
+            _currentPath = WordCardListRoutePath();
+            notifyListeners();
+          },
         ),
         fullscreenDialog: true,
       ));

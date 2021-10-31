@@ -1,9 +1,15 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:nihongo/models/word.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uuid/uuid.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../models/word.dart';
+import '../word_card_data_repository.dart';
 
-class WordCardEditPage extends StatefulWidget {
+part 'word_card_edit_state.dart';
+part 'word_card_edit_event.dart';
+part 'word_card_edit_bloc.dart';
+
+class WordCardEditPage extends StatelessWidget {
   final Word? word;
   final ValueChanged<Word>? onSubmit;
 
@@ -14,10 +20,29 @@ class WordCardEditPage extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<WordCardEditPage> createState() => _WordCardEditPageState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => WordCardEditBloc(),
+      child: WordCardEditView(word: word, onSubmit: onSubmit),
+    );
+  }
 }
 
-class _WordCardEditPageState extends State<WordCardEditPage> {
+class WordCardEditView extends StatefulWidget {
+  final Word? word;
+  final ValueChanged<Word>? onSubmit;
+
+  const WordCardEditView({
+    this.word,
+    this.onSubmit,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<WordCardEditView> createState() => _WordCardEditViewState();
+}
+
+class _WordCardEditViewState extends State<WordCardEditView> {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _kanjiController;
   late TextEditingController _kanaController;
@@ -60,11 +85,6 @@ class _WordCardEditPageState extends State<WordCardEditPage> {
               icon: const Icon(Icons.check)),
         ],
       ),
-      // body: BlocProvider(
-      //   create: (context) =>
-      //       WordCardEditBloc(context.read<WordCardDataRepository>()),
-      //   child: const WordCardEditView(),
-      // ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(36),
         child: Form(
