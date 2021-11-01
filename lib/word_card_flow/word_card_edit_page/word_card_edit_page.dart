@@ -52,18 +52,27 @@ class WordCardEditView extends StatefulWidget {
 
 class _WordCardEditViewState extends State<WordCardEditView> {
   final _formKey = GlobalKey<FormState>();
-  late TextEditingController _kanjiController;
-  late TextEditingController _kanaController;
-  late TextEditingController _meaningController;
-  late TextEditingController _tagsStringController;
+  String _kanji = '';
+  String _kana = '';
+  String _meaning = '';
+  String _tagsString = '';
 
   @override
   void initState() {
     super.initState();
-    _kanjiController = TextEditingController(text: widget.word?.kanji);
-    _kanaController = TextEditingController(text: widget.word?.kana);
-    _meaningController = TextEditingController(text: widget.word?.meaning);
-    _tagsStringController = TextEditingController(text: widget.word?.tags.join(', '));
+
+    final word = widget.word;
+    if (word != null) {
+      _kanji = word.kanji;
+      _kana = word.kana;
+      _meaning = word.meaning;
+      _tagsString = word.tags.join(', ');
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -100,13 +109,13 @@ class _WordCardEditViewState extends State<WordCardEditView> {
           IconButton(
               onPressed: () {
                 if (_formKey.currentState?.validate() ?? false) {
-                  final List<String> tags = _tagsStringController.text.split(',').map((e) => e.trim()).toList();
+                  final List<String> tags = _tagsString.split(',').map((e) => e.trim()).toList();
                   final word = Word(
                     id: widget.word?.id ?? const Uuid().v4(),
-                    kanji: _kanjiController.text,
-                    kana: _kanaController.text,
+                    kanji: _kanji,
+                    kana: _kana,
                     accentAtIndex: {},
-                    meaning: _meaningController.text,
+                    meaning: _meaning,
                     tags: tags,
                   );
                   widget.onSubmit?.call(word);
@@ -126,7 +135,8 @@ class _WordCardEditViewState extends State<WordCardEditView> {
                   labelText: AppLocalizations.of(context)?.wordCardEditFieldKanjiTitle,
                 ),
                 textInputAction: TextInputAction.next,
-                controller: _kanjiController,
+                initialValue: _kanji,
+                onChanged: (val) => _kanji = val,
                 validator: (value) {
                   if (value?.isEmpty ?? true) {
                     return AppLocalizations.of(context)?.wordCardEditFieldKanjiErrorNull;
@@ -139,7 +149,12 @@ class _WordCardEditViewState extends State<WordCardEditView> {
                   labelText: AppLocalizations.of(context)?.wordCardEditFieldKanaTitle,
                 ),
                 textInputAction: TextInputAction.next,
-                controller: _kanaController,
+                initialValue: _kana,
+                onChanged: (val) {
+                  setState(() {
+                    _kana = val;
+                  });
+                },
                 validator: (value) {
                   if (value?.isEmpty ?? true) {
                     return AppLocalizations.of(context)?.wordCardEditFieldKanaErrorNull;
@@ -153,14 +168,16 @@ class _WordCardEditViewState extends State<WordCardEditView> {
                 ),
                 textInputAction: TextInputAction.newline,
                 maxLines: null,
-                controller: _meaningController,
+                initialValue: _meaning,
+                onChanged: (val) => _meaning = val,
               ),
               TextFormField(
                 decoration: InputDecoration(
                   labelText: AppLocalizations.of(context)?.wordCardEditFieldTagsTitle,
                   hintText: AppLocalizations.of(context)?.wordCardEditFieldTagsPlaceholder,
                 ),
-                controller: _tagsStringController,
+                initialValue: _tagsString,
+                onChanged: (val) => _tagsString = val,
               ),
             ],
           ),
