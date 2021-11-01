@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nihongo/common_ui/word_card_accented_text.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../models/word.dart';
@@ -9,6 +10,8 @@ part 'word_card_edit_state.dart';
 part 'word_card_edit_event.dart';
 part 'word_card_edit_bloc.dart';
 
+/// Word editing page.
+/// It is simple enough for not using BLOC pattern.
 class WordCardEditPage extends StatelessWidget {
   final Word? word;
   final ValueChanged<Word>? onSubmit;
@@ -54,6 +57,7 @@ class _WordCardEditViewState extends State<WordCardEditView> {
   final _formKey = GlobalKey<FormState>();
   String _kanji = '';
   String _kana = '';
+  Map<int, CharacterAccent> _accentAtIndex = {};
   String _meaning = '';
   String _tagsString = '';
 
@@ -65,6 +69,7 @@ class _WordCardEditViewState extends State<WordCardEditView> {
     if (word != null) {
       _kanji = word.kanji;
       _kana = word.kana;
+      _accentAtIndex = word.accentAtIndex;
       _meaning = word.meaning;
       _tagsString = word.tags.join(', ');
     }
@@ -114,7 +119,7 @@ class _WordCardEditViewState extends State<WordCardEditView> {
                     id: widget.word?.id ?? const Uuid().v4(),
                     kanji: _kanji,
                     kana: _kana,
-                    accentAtIndex: {},
+                    accentAtIndex: _accentAtIndex,
                     meaning: _meaning,
                     tags: tags,
                   );
@@ -162,6 +167,38 @@ class _WordCardEditViewState extends State<WordCardEditView> {
                   return null;
                 },
               ),
+              if (_kana.isNotEmpty)
+                // Force the column as wide as the parent
+                SizedBox(
+                  width: double.infinity,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 12),
+                        child: Text(
+                          AppLocalizations.of(context)?.wordCardEditFieldAccentsTitle ?? '',
+                        ),
+                      ),
+                      WordCardAccentedText(
+                        text: _kana,
+                        accentAtIndex: _accentAtIndex,
+                        fontSize: 48,
+                        onTapCharacterAtIndex: (idx) {
+                          final accent = _accentAtIndex[idx];
+                          final newAccent = _getNextAccent(accent);
+                          setState(() {
+                            if (newAccent != null) {
+                              _accentAtIndex[idx] = newAccent;
+                            } else {
+                              _accentAtIndex.remove(idx);
+                            }
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                ),
               TextFormField(
                 decoration: InputDecoration(
                   labelText: AppLocalizations.of(context)?.wordCardEditFieldMeaningTitle,
@@ -184,5 +221,20 @@ class _WordCardEditViewState extends State<WordCardEditView> {
         ),
       ),
     );
+  }
+
+  //
+
+  static CharacterAccent? _getNextAccent(CharacterAccent? accent) {
+    if (accent != null) {
+      switch (accent) {
+        case CharacterAccent.plain:
+          return CharacterAccent.fall;
+        case CharacterAccent.fall:
+          return null;
+      }
+    } else {
+      return CharacterAccent.plain;
+    }
   }
 }

@@ -7,6 +7,7 @@
     "wordCardEditFieldKanjiErrorNull": "Cannot be empty",
     "wordCardEditFieldKanaTitle": "Kana",
     "wordCardEditFieldKanaErrorNull": "Cannot be empty",
+    "wordCardEditFieldAccentsTitle": "Accents",
     "wordCardEditFieldMeaningTitle": "Meaning",
     "wordCardEditFieldTagsTitle": "Tags",
     "wordCardEditFieldTagsPlaceholder": "Separate the tags by comma",

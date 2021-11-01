@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../common_ui/word_card_accented_text.dart';
 import '../../constants.dart';
 import '../../models/word.dart';
 
@@ -42,61 +43,8 @@ class WordCardBackView extends StatelessWidget {
       : _word = word,
         super(key: key);
 
-  //
-
-  static Color _colorFromAccent(CharacterAccent accent) {
-    switch (accent) {
-      case CharacterAccent.plain:
-        return Colors.black;
-      case CharacterAccent.fall:
-        return Colors.red;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    final List<Widget> kanaWidgets = [];
-
-    _word.kana.runes.toList().asMap().forEach((idx, rune) {
-      final character = String.fromCharCode(rune);
-      final accent = _word.accentAtIndex[idx];
-      Color textColor = Colors.black;
-      final List<Widget> textWidgets = [];
-
-      if (accent != null) {
-        textColor = _colorFromAccent(accent);
-        textWidgets.add(Positioned(
-          left: 0,
-          top: 0,
-          right: 0,
-          height: 20,
-          child: CustomPaint(
-            painter: AccentPainter(accent: accent, color: textColor),
-          ),
-        ));
-      }
-
-      textWidgets.add(
-        Text(
-          character,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontFamily: Constants.defaultFontFamily,
-            fontSize: 24,
-            color: textColor,
-          ),
-        ),
-      );
-
-      kanaWidgets.add(SizedBox(
-        height: 40,
-        child: Stack(
-          alignment: AlignmentDirectional.bottomCenter,
-          children: textWidgets,
-        ),
-      ));
-    });
-
     return Card(
       elevation: 12,
       color: Colors.white,
@@ -108,7 +56,7 @@ class WordCardBackView extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Wrap(children: kanaWidgets),
+              WordCardAccentedText.word(word: _word),
               const SizedBox(height: 12),
               Text(
                 _word.meaning,
@@ -129,37 +77,6 @@ class WordCardBackView extends StatelessWidget {
 
 //
 
-class AccentPainter extends CustomPainter {
-  final CharacterAccent accent;
-  final Color color;
-
-  AccentPainter({required this.accent, required this.color});
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint1 = Paint()
-      ..color = color
-      ..style = PaintingStyle.fill;
-
-    switch (accent) {
-      case CharacterAccent.plain:
-        canvas.drawRect(Rect.fromLTWH(0, 0, size.width, 2), paint1);
-        break;
-      case CharacterAccent.fall:
-        canvas.drawRect(Rect.fromLTWH(0, 0, size.width, 2), paint1);
-        canvas.drawRect(Rect.fromLTWH(size.width - 2, 0, 2, 10), paint1);
-        break;
-    }
-  }
-
-  @override
-  bool shouldRepaint(AccentPainter oldDelegate) {
-    return accent != oldDelegate.accent || color != oldDelegate.color;
-  }
-}
-
-//
-
 class WordCardView extends StatefulWidget {
   final Word word;
 
@@ -175,9 +92,7 @@ class _WordCardViewState extends State<WordCardView> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      child: (_isShowingFront
-          ? WordCardFrontView(kanji: widget.word.kanji)
-          : WordCardBackView(word: widget.word)),
+      child: (_isShowingFront ? WordCardFrontView(kanji: widget.word.kanji) : WordCardBackView(word: widget.word)),
       onTap: () {
         setState(() {
           _isShowingFront = !_isShowingFront;
