@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uuid/uuid.dart';
 import '../../models/word.dart';
-import '../word_card_data_repository.dart';
 
 part 'word_card_edit_state.dart';
 part 'word_card_edit_event.dart';

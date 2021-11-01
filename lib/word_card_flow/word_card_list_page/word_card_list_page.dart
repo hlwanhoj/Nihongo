@@ -14,9 +14,11 @@ part 'word_card_list_bloc.dart';
 
 class WordCardListPage extends StatelessWidget {
   final void Function()? onAddCard;
+  final void Function(Word)? onEditCard;
 
   const WordCardListPage({
     this.onAddCard,
+    this.onEditCard,
     Key? key,
   }) : super(key: key);
 
@@ -28,6 +30,7 @@ class WordCardListPage extends StatelessWidget {
             WordCardListBloc(context.read<WordCardDataRepository>()),
         child: WordCardListView(
           onAddCard: onAddCard,
+          onEditCard: onEditCard,
         ),
       ),
     );
@@ -38,9 +41,11 @@ class WordCardListPage extends StatelessWidget {
 
 class WordCardListView extends StatefulWidget {
   final void Function()? onAddCard;
+  final void Function(Word)? onEditCard;
 
   const WordCardListView({
     this.onAddCard,
+    this.onEditCard,
     Key? key,
   }) : super(key: key);
 
@@ -130,9 +135,10 @@ class _WordCardListViewState extends State<WordCardListView> {
             padding: const EdgeInsets.all(9),
             splashRadius: 30,
             onPressed: () {
-              // context
-              //     .read<WordCardListBloc>()
-              //     .add(WordCardListNextCardRequested());
+              final word = state.currentWord;
+              if (word != null) {
+                widget.onEditCard?.call(word);
+              }
             },
           ),
         ));

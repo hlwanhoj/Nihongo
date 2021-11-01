@@ -8,8 +8,7 @@ import 'word_card_edit_page/word_card_edit_page.dart';
 
 class WordCardFlow extends RouterDelegate<WordCardRoutePath>
     with PopNavigatorRouterDelegateMixin<WordCardRoutePath>, ChangeNotifier {
-  WordCardRoutePath _currentPath = WordCardAddRoutePath();
-  // WordCardRoutePath _currentPath = WordCardListRoutePath();
+  WordCardRoutePath _currentPath = WordCardListRoutePath();
 
   @override
   GlobalKey<NavigatorState>? navigatorKey = GlobalKey<NavigatorState>();
@@ -31,6 +30,10 @@ class WordCardFlow extends RouterDelegate<WordCardRoutePath>
             _currentPath = WordCardAddRoutePath();
             notifyListeners();
           },
+          onEditCard: (word) {
+            _currentPath = WordCardEditRoutePath(word: word);
+            notifyListeners();
+          },
         ),
       ),
     ];
@@ -38,9 +41,14 @@ class WordCardFlow extends RouterDelegate<WordCardRoutePath>
     final WordCardRoutePath path = _currentPath;
     if (path is WordCardEditRoutePath) {
       pages.add(MaterialPage(
-        key: ValueKey('WordCardEdit ${path.cardId}'),
+        key: ValueKey('WordCardEdit ${path.word.id}'),
         child: WordCardEditPage(
-          onSubmit: (word) {},
+          word: path.word,
+          onSubmit: (word) {
+            context.read<WordCardDataRepository>().updateWord(word);
+            _currentPath = WordCardListRoutePath();
+            notifyListeners();
+          },
         ),
       ));
     }
