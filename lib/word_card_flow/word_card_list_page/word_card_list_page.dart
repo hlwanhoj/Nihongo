@@ -14,8 +14,8 @@ part 'word_card_list_event.dart';
 part 'word_card_list_bloc.dart';
 
 class WordCardListPage extends StatelessWidget {
-  final void Function()? onAddCard;
-  final void Function(Word)? onEditCard;
+  final VoidCallback? onAddCard;
+  final ValueChanged<Word>? onEditCard;
 
   const WordCardListPage({
     this.onAddCard,
@@ -41,8 +41,8 @@ class WordCardListPage extends StatelessWidget {
 //
 
 class WordCardListView extends StatefulWidget {
-  final void Function()? onAddCard;
-  final void Function(Word)? onEditCard;
+  final VoidCallback? onAddCard;
+  final ValueChanged<Word>? onEditCard;
 
   const WordCardListView({
     this.onAddCard,

@@ -10,9 +10,9 @@ class WordCardListBloc extends Bloc<WordCardListEvent, WordCardListState> {
       int _cardIndex = state.cardIndex;
 
       // Make sure the card index is valid
-      if (state.words.isNotEmpty) {
-        while (_cardIndex >= state.words.length) {
-          _cardIndex -= state.words.length;
+      if (event.words.isNotEmpty) {
+        while (_cardIndex >= event.words.length) {
+          _cardIndex -= event.words.length;
         }
       }
 

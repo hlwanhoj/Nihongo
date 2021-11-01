@@ -1,4 +1,6 @@
 {
+    "commonDialogButtonYes": "Yes",
+    "commonDialogButtonNo": "No",
     "wordCardListButtonNextCard": "Next Card",
     "wordCardEditTitle": "Create Vocabulary",
     "wordCardEditFieldKanjiTitle": "Kanji",
@@ -7,5 +9,6 @@
     "wordCardEditFieldKanaErrorNull": "Cannot be empty",
     "wordCardEditFieldMeaningTitle": "Meaning",
     "wordCardEditFieldTagsTitle": "Tags",
-    "wordCardEditFieldTagsPlaceholder": "Separate the tags by comma"
+    "wordCardEditFieldTagsPlaceholder": "Separate the tags by comma",
+    "wordCardEditDialogDeleteTitle": "Do you want to remove this word permanently?"
 }

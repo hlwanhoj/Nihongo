@@ -49,6 +49,11 @@ class WordCardFlow extends RouterDelegate<WordCardRoutePath>
             _currentPath = WordCardListRoutePath();
             notifyListeners();
           },
+          onDelete: (word) {
+            context.read<WordCardDataRepository>().deleteWord(word);
+            _currentPath = WordCardListRoutePath();
+            notifyListeners();
+          },
         ),
       ));
     }
