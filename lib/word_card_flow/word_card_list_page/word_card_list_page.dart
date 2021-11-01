@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../constants.dart';
 import '../../models/word.dart';
 import 'word_card.dart';
@@ -81,15 +82,15 @@ class _WordCardListViewState extends State<WordCardListView> {
                 padding: const EdgeInsets.only(left: 12),
               ),
               child: Row(
-                children: const [
+                children: [
                   Text(
-                    "Next Card",
-                    style: TextStyle(
+                    AppLocalizations.of(context)?.wordCardListButtonNextCard?? '',
+                    style: const TextStyle(
                       fontSize: 24,
                       fontFamily: Constants.defaultFontFamily,
                     ),
                   ),
-                  Icon(Icons.arrow_right, size: 48),
+                  const Icon(Icons.arrow_right, size: 48),
                 ],
               ),
               onPressed: () {

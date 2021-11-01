@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/src/provider.dart';
+import 'package:provider/provider.dart';
 import 'word_card_data_repository.dart';
 import 'word_card_route_path.dart';
 import 'word_card_list_page/word_card_list_page.dart';

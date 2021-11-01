@@ -1,0 +1,11 @@
+{
+    "wordCardListButtonNextCard": "Next Card",
+    "wordCardEditTitle": "Create Vocabulary",
+    "wordCardEditFieldKanjiTitle": "Kanji",
+    "wordCardEditFieldKanjiErrorNull": "Cannot be empty",
+    "wordCardEditFieldKanaTitle": "Kana",
+    "wordCardEditFieldKanaErrorNull": "Cannot be empty",
+    "wordCardEditFieldMeaningTitle": "Meaning",
+    "wordCardEditFieldTagsTitle": "Tags",
+    "wordCardEditFieldTagsPlaceholder": "Separate the tags by comma"
+}

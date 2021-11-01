@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'stores/file_store.dart';
 import 'word_card_flow/word_card_data_repository.dart';
 import 'word_card_flow/word_card_flow.dart';
@@ -46,6 +47,8 @@ class MyApp extends StatelessWidget {
         //   ),
         //   textTheme: TextTheme()
         // ),
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
       ),
     );
   }

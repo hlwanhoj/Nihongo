@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uuid/uuid.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../models/word.dart';
 
 part 'word_card_edit_state.dart';
@@ -62,13 +63,11 @@ class _WordCardEditViewState extends State<WordCardEditView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Create Vocabulary'),
+        title: Text(AppLocalizations.of(context)?.wordCardEditTitle ?? ''),
         actions: [
           if (widget.word != null)
             IconButton(
-              onPressed: () {
-                
-              },
+              onPressed: () {},
               icon: const Icon(Icons.delete),
             ),
           IconButton(
@@ -98,43 +97,50 @@ class _WordCardEditViewState extends State<WordCardEditView> {
           child: Column(
             children: [
               TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Kanji',
+                decoration: InputDecoration(
+                  labelText:
+                      AppLocalizations.of(context)?.wordCardEditFieldKanjiTitle,
                 ),
                 textInputAction: TextInputAction.next,
                 controller: _kanjiController,
                 validator: (value) {
                   if (value?.isEmpty ?? true) {
-                    return "Cannot be empty";
+                    return AppLocalizations.of(context)
+                        ?.wordCardEditFieldKanjiErrorNull;
                   }
                   return null;
                 },
               ),
               TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Kana',
+                decoration: InputDecoration(
+                  labelText:
+                      AppLocalizations.of(context)?.wordCardEditFieldKanaTitle,
                 ),
                 textInputAction: TextInputAction.next,
                 controller: _kanaController,
                 validator: (value) {
                   if (value?.isEmpty ?? true) {
-                    return "Cannot be empty";
+                    return AppLocalizations.of(context)
+                        ?.wordCardEditFieldKanaErrorNull;
                   }
                   return null;
                 },
               ),
               TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Meaning',
+                decoration: InputDecoration(
+                  labelText: AppLocalizations.of(context)
+                      ?.wordCardEditFieldMeaningTitle,
                 ),
                 textInputAction: TextInputAction.newline,
                 maxLines: null,
                 controller: _meaningController,
               ),
               TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Tags',
-                  hintText: 'Separate the tags by comma.',
+                decoration: InputDecoration(
+                  labelText:
+                      AppLocalizations.of(context)?.wordCardEditFieldTagsTitle,
+                  hintText: AppLocalizations.of(context)
+                      ?.wordCardEditFieldTagsPlaceholder,
                 ),
                 controller: _tagsStringController,
               ),
