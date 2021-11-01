@@ -127,12 +127,14 @@ class _WordCardEditViewState extends State<WordCardEditView> {
                 decoration: const InputDecoration(
                   labelText: 'Meaning',
                 ),
-                textInputAction: TextInputAction.next,
+                textInputAction: TextInputAction.newline,
+                maxLines: null,
                 controller: _meaningController,
               ),
               TextFormField(
                 decoration: const InputDecoration(
                   labelText: 'Tags',
+                  hintText: 'Separate the tags by comma.',
                 ),
                 controller: _tagsStringController,
               ),
