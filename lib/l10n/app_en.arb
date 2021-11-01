@@ -2,7 +2,7 @@
     "commonDialogButtonYes": "Yes",
     "commonDialogButtonNo": "No",
     "wordCardListButtonNextCard": "Next Card",
-    "wordCardEditTitle": "Create Vocabulary",
+    "wordCardEditTitle": "Update Vocabulary",
     "wordCardEditFieldKanjiTitle": "Kanji",
     "wordCardEditFieldKanjiErrorNull": "Cannot be empty",
     "wordCardEditFieldKanaTitle": "Kana",
@@ -11,5 +11,6 @@
     "wordCardEditFieldMeaningTitle": "Meaning",
     "wordCardEditFieldTagsTitle": "Tags",
     "wordCardEditFieldTagsPlaceholder": "Separate the tags by comma",
-    "wordCardEditDialogDeleteTitle": "Do you want to remove this word permanently?"
+    "wordCardEditDialogDeleteTitle": "Do you want to remove this word permanently?",
+    "wordCardAddTitle": "Add Vocabulary"
 }

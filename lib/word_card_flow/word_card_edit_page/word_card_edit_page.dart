@@ -61,6 +61,31 @@ class _WordCardEditViewState extends State<WordCardEditView> {
   String _meaning = '';
   String _tagsString = '';
 
+  //
+
+  static CharacterAccent? _getNextAccent(CharacterAccent? accent) {
+    if (accent != null) {
+      switch (accent) {
+        case CharacterAccent.plain:
+          return CharacterAccent.fall;
+        case CharacterAccent.fall:
+          return null;
+      }
+    } else {
+      return CharacterAccent.plain;
+    }
+  }
+
+  String getNavigationTitle(BuildContext context) {
+    if (widget.word == null) {
+      return AppLocalizations.of(context)?.wordCardAddTitle ?? '';
+    } else {
+      return AppLocalizations.of(context)?.wordCardEditTitle ?? '';
+    }
+  }
+
+  //
+
   @override
   void initState() {
     super.initState();
@@ -85,7 +110,7 @@ class _WordCardEditViewState extends State<WordCardEditView> {
     final word = widget.word;
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)?.wordCardEditTitle ?? ''),
+        title: Text(getNavigationTitle(context)),
         actions: [
           if (word != null)
             IconButton(
@@ -167,6 +192,8 @@ class _WordCardEditViewState extends State<WordCardEditView> {
                   return null;
                 },
               ),
+
+              // Accents
               if (_kana.isNotEmpty)
                 // Force the column as wide as the parent
                 SizedBox(
@@ -175,7 +202,7 @@ class _WordCardEditViewState extends State<WordCardEditView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(top: 12),
+                        padding: const EdgeInsets.only(top: 12, bottom: 8),
                         child: Text(
                           AppLocalizations.of(context)?.wordCardEditFieldAccentsTitle ?? '',
                         ),
@@ -199,10 +226,12 @@ class _WordCardEditViewState extends State<WordCardEditView> {
                     ],
                   ),
                 ),
+
               TextFormField(
                 decoration: InputDecoration(
                   labelText: AppLocalizations.of(context)?.wordCardEditFieldMeaningTitle,
                 ),
+                textCapitalization: TextCapitalization.sentences,
                 textInputAction: TextInputAction.newline,
                 maxLines: null,
                 initialValue: _meaning,
@@ -221,20 +250,5 @@ class _WordCardEditViewState extends State<WordCardEditView> {
         ),
       ),
     );
-  }
-
-  //
-
-  static CharacterAccent? _getNextAccent(CharacterAccent? accent) {
-    if (accent != null) {
-      switch (accent) {
-        case CharacterAccent.plain:
-          return CharacterAccent.fall;
-        case CharacterAccent.fall:
-          return null;
-      }
-    } else {
-      return CharacterAccent.plain;
-    }
   }
 }
