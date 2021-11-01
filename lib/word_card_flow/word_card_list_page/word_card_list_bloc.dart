@@ -4,8 +4,7 @@ class WordCardListBloc extends Bloc<WordCardListEvent, WordCardListState> {
   final WordCardDataRepository repository;
   late final StreamSubscription<List<Word>> _wordsSubscription;
 
-  WordCardListBloc(this.repository)
-      : super(const WordCardListState(words: [])) {
+  WordCardListBloc(this.repository) : super(const WordCardListState(words: [])) {
     on<WordCardListUpdated>((event, emit) {
       int _cardIndex = state.cardIndex;
 

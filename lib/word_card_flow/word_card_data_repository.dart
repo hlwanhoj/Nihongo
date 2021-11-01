@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:rxdart/rxdart.dart';
 import '../models/word.dart';
 
@@ -22,15 +23,24 @@ class WordCardDataRepository {
 
   Stream<List<Word>> get words => _wordMap.map((wordMap) => wordMap.values.toList());
 
+  //
+
+  void _commit(ValueGetter<Map<String, Word>> fn) {
+    _wordMap.add(fn());
+    local.setWords(_wordMap.value.values.toList());
+  }
+
+  //
+
   void updateWord(Word word) {
-    final Map<String, Word> newMap = _wordMap.value;
-    newMap[word.id] = word;
-    _wordMap.add(newMap);
+    _commit(() {
+      return _wordMap.value..[word.id] = word;
+    });
   }
 
   void deleteWord(Word word) {
-    final Map<String, Word> newMap = _wordMap.value;
-    newMap.remove(word.id);
-    _wordMap.add(newMap);
+    _commit(() {
+      return _wordMap.value..remove(word.id);
+    });
   }
 }
