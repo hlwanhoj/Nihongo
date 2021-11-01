@@ -64,6 +64,13 @@ class _WordCardEditViewState extends State<WordCardEditView> {
       appBar: AppBar(
         title: const Text('Create Vocabulary'),
         actions: [
+          if (widget.word != null)
+            IconButton(
+              onPressed: () {
+                
+              },
+              icon: const Icon(Icons.delete),
+            ),
           IconButton(
               onPressed: () {
                 if (_formKey.currentState?.validate() ?? false) {
